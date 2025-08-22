@@ -1,150 +1,80 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <title>Horoscope Finder</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-    }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-    }
-
-    button {
-      margin-top: 1.5rem;
-      padding: 0.5rem 1rem;
-    }
-
-    #result {
-      margin-top: 2rem;
-      font-weight: bold;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>Find Your Horoscope Sign</h1>
-  <form id="horoscopeForm">
-    <label for="name">Name</label>
-    <input type="text" id="name" required>
-    <label for="dob">Date of Birth</label>
-    <input type="date" id="dob" required max="">
-    <button type="submit">Get Sign</button>
-  </form>
-  <div id="result"></div>
-  <script>
-    // Set max to today so future dates not allowed
-    document.getElementById('dob').max = new Date().toISOString().split('T')[0];
-
-    function getWesternZodiac(month, day) {
-      // month: 1-12
-      if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "Aries";
-      if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "Taurus";
-      if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "Gemini";
-      if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "Cancer";
-      if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Leo";
-      if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "Virgo";
-      if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "Libra";
-      if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "Scorpio";
-      if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "Sagittarius";
-      if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "Capricorn";
-      if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "Aquarius";
-      return "Pisces"; // (Feb 19 - Mar 20)
-    }
-
-    document.getElementById('horoscopeForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const dobValue = document.getElementById('dob').value;
-      if (!dobValue) {
-        document.getElementById('result').textContent = "Enter a valid date of birth.";
-        return;
-      }
-      const dob = new Date(dobValue + 'T00:00:00');
-      if (isNaN(dob.getTime())) {
-        document.getElementById('result').textContent = "Invalid date format.";
-        return;
-      }
-      const month = dob.getMonth() + 1;
-      const day = dob.getDate();
-      const western = getWesternZodiac(month, day);
-
-      // Optional: Chinese zodiac (kept for interest)
-      const year = dob.getFullYear();
-      const chineseAnimals = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
-      const chinese = chineseAnimals[(year - 4) % 12];
-
-      document.getElementById('result').textContent = `${name}, your western zodiac sign is ${western}. Chinese zodiac: ${chinese}.`;
-    });
-  </script>  <!DOCTYPE html>
+<%@ page isELIgnored="true" %>
+  <!DOCTYPE html>
   <html>
+
   <head>
     <meta charset="UTF-8">
     <title>Horoscope Finder</title>
     <style>
-      body { font-family: Arial, sans-serif; margin: 2rem; }
-      label { display:block; margin-top:1rem; }
-      button { margin-top:1.5rem; padding:0.5rem 1rem; }
-      #result { margin-top:2rem; font-weight:bold; }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+      }
+
+      label {
+        display: block;
+        margin-top: 1rem;
+      }
+
+      button {
+        margin-top: 1.5rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #result {
+        margin-top: 2rem;
+        font-weight: bold;
+      }
     </style>
   </head>
+
   <body>
     <h1>Find Your Horoscope Sign</h1>
-    <form id="horoscopeForm">
+    <form id="horoscopeForm" autocomplete="off">
       <label for="name">Name</label>
       <input type="text" id="name" required>
       <label for="dob">Date of Birth</label>
       <input type="date" id="dob" required max="">
       <button type="submit">Get Sign</button>
     </form>
-    <div id="result"></div>
+    <div id="result" aria-live="polite"></div>
+
     <script>
       document.getElementById('dob').max = new Date().toISOString().split('T')[0];
-  
-      function getWesternZodiac(month, day) {
-        if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "Aries";
-        if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "Taurus";
-        if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "Gemini";
-        if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "Cancer";
-        if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Leo";
-        if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "Virgo";
-        if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "Libra";
-        if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "Scorpio";
-        if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "Sagittarius";
-        if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "Capricorn";
-        if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "Aquarius";
+
+      function getWesternZodiac(m, d) {
+        if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return "Aries";
+        if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return "Taurus";
+        if ((m === 5 && d >= 21) || (m === 6 && d <= 20)) return "Gemini";
+        if ((m === 6 && d >= 21) || (m === 7 && d <= 22)) return "Cancer";
+        if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return "Leo";
+        if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return "Virgo";
+        if ((m === 9 && d >= 23) || (m === 10 && d <= 22)) return "Libra";
+        if ((m === 10 && d >= 23) || (m === 11 && d <= 21)) return "Scorpio";
+        if ((m === 11 && d >= 22) || (m === 12 && d <= 21)) return "Sagittarius";
+        if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return "Capricorn";
+        if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return "Aquarius";
         return "Pisces";
       }
-  
+
       document.getElementById('horoscopeForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('name').value.trim();
-        const dobValue = document.getElementById('dob').value;
-        if (!dobValue) {
-          document.getElementById('result').textContent = "Enter a valid date of birth.";
-          return;
-        }
-        const dob = new Date(dobValue + 'T00:00:00');
-        if (isNaN(dob.getTime())) {
-          document.getElementById('result').textContent = "Invalid date format.";
-          return;
-        }
-        const month = dob.getMonth() + 1;
-        const day = dob.getDate();
-        const western = getWesternZodiac(month, day);
+        const dobVal = document.getElementById('dob').value;
+        if (!name) { document.getElementById('result').textContent = "Enter a name."; return; }
+        if (!dobVal) { document.getElementById('result').textContent = "Enter a valid date."; return; }
+        const dob = new Date(dobVal + "T00:00:00");
+        if (isNaN(dob.getTime())) { document.getElementById('result').textContent = "Invalid date."; return; }
+
+        const western = getWesternZodiac(dob.getMonth() + 1, dob.getDate());
         const year = dob.getFullYear();
-        const chineseAnimals = ["Rat","Ox","Tiger","Rabbit","Dragon","Snake","Horse","Goat","Monkey","Rooster","Dog","Pig"];
-        const chinese = chineseAnimals[(year - 4) % 12];
-  
-        // Use concatenation to avoid JSP EL (${...}) being evaluated server-side
+        const animals = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
+        const chinese = animals[(year - 4) % 12];
+
         document.getElementById('result').textContent =
           name + ", your western zodiac sign is " + western + ". Chinese zodiac: " + chinese + ".";
       });
     </script>
   </body>
+
   </html>
