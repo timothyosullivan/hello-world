@@ -4,7 +4,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Horoscope Insight</title>
+    <title>Horoscope Insights</title>
     <style>
       body {
         font-family: Arial, sans-serif;
