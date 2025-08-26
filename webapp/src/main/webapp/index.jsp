@@ -5,6 +5,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Horoscope Insight</title>
+    <br>
     <style>
       body {
         font-family: Arial, sans-serif;
